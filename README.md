@@ -1,32 +1,31 @@
-# Erosion Sector · 공식 배포
+# Erosion Sector · 모드 배포
 
-Minecraft 1.21.1 / NeoForge용 Erosion Sector 모드의 공식 바이너리 저장소입니다. 모드 소스 코드와 서명 개인키는 공개하지 않습니다.
+Minecraft 1.21.1 / NeoForge용 Erosion Sector 바이너리 저장소입니다. 모드 소스 코드와 배포 서명 개인키는 공개하지 않습니다.
 
-- [최신 모드 다운로드](https://github.com/AetrKD/erosion-sector-releases/releases/latest)
-- [공식 배포 정보](https://erosion-sector-editor.vercel.app/releases/)
-- [임무 기록 조회](https://erosion-sector-editor.vercel.app/records/)
+- [모드 다운로드](https://github.com/AetrKD/erosion-sector-releases/releases/latest)
+- [내 클리어 기록](https://erosion-sector-editor.vercel.app/clears/)
 - [스테이지 에디터](https://erosion-sector-editor.vercel.app/)
 
-## 파일 확인
+## 개인 클리어 기록 · 0.4.4부터
 
-릴리스에서 JAR, release.json, public-key.json, verify.mjs를 내려받고 Node.js로 실행합니다.
+게임 내 파일 변조 검사와 상세 임무 기록 업로드를 제거했습니다. 웹에는 플레이어 계정 UUID·스테이지 고유 ID·이름·챕터·미션 코드·최초 완료 시각만 저장합니다. 실패·플레이 시간·점수·장비·모드 해시는 보내지 않습니다.
 
-```text
-node verify.mjs erosionsector-VERSION.jar release.json public-key.json
-```
+같은 계정으로 새 월드를 만들거나 다른 사람의 방에 들어가면 클리어 목록을 불러옵니다. 임무 단말기의 **내 클리어 기록**, 명령어 **/erosionsector clears**, 시설 터미널의 **CLEARS**로 확인하세요. 화면의 **웹에서 보기**로 브라우저에서도 조회할 수 있습니다.
 
-배포 명세의 Ed25519 서명과 JAR의 SHA-256을 모두 확인합니다. 공개키 지문은 다음과 같습니다. 검증에 사용할 공개키는 신뢰하는 경로의 이 지문과 대조하세요.
+이름이 아니라 서버에서 사용하는 Minecraft UUID로 구분합니다. 온라인·오프라인 모드를 오가며 UUID가 달라지면 별도 기록입니다. 경쟁 기록 검증이나 별도 계정 로그인은 제공하지 않으며 UUID를 아는 사람은 해당 완료 목록을 조회할 수 있습니다.
 
-```text
-903d230cbbd661d0279ac4e3d32abc9a5695ae2ad59e57c665d72de4fb96632b
-```
+인터넷에 연결되지 않아도 완료를 기기에 보존하고 나중에 동기화합니다. config/erosionsector/progress/settings.json의 syncEnabled로 서버의 동기화를 끌 수 있습니다. 기존 로컬 results 파일은 업로드하지 않습니다.
 
-각 릴리스에는 원본 명세 manifest.json, 분리된 서명 manifest.json.sig, 묶음 release.json, SHA256SUMS.txt도 제공합니다. 공개키는 JAR 내부에도 포함되어 서버·월드를 열 때 파일을 확인합니다. 모드를 자동 설치하거나 실행 중 JAR를 교체하지 않습니다.
+다른 제작자의 스테이지도 미리 웹에 등록할 필요가 없습니다. ID가 같으면 같은 스테이지이고 이름이 같아도 ID가 다르면 따로 기록합니다. 에디터의 새 프로젝트와 예시는 새 ID를 발급하며, 공유 프로젝트를 별도 작품으로 만들려면 스테이지 설정의 **다른 스테이지로 복제**를 사용하세요.
 
-## 임무 기록
+## 다운로드 파일 확인 (선택)
 
-임무 결과는 로컬 results 폴더에 보존하고 익명으로 업로드합니다. 플레이어 이름·UUID와 로컬 경로는 업로드하지 않습니다. 게임 채팅의 기록 보기 링크로 조회할 수 있습니다. 업로드는 config/erosionsector/records.json의 uploadEnabled로 끌 수 있습니다.
+배포 파일 확인용 Ed25519 서명과 SHA-256 파일은 계속 제공합니다. 게임의 변조 검사나 기록 인증에는 사용하지 않습니다. 릴리스에서 JAR, release.json, public-key.json, verify.mjs를 내려받고 Node.js로 실행하세요.
 
-모든 기록은 플레이한 서버의 자체 보고입니다. 공식 파일의 해시가 일치해도 실행 중 변조나 임무 결과의 정당성을 원격으로 인증한 것은 아닙니다. 경쟁 순위 인증 기능은 제공하지 않습니다.
+    node verify.mjs erosionsector-VERSION.jar release.json public-key.json
 
-TaCZ, Carry On 등 다른 모드의 JAR는 이 배포에 포함되지 않습니다.
+공개키 지문:
+
+    903d230cbbd661d0279ac4e3d32abc9a5695ae2ad59e57c665d72de4fb96632b
+
+TaCZ·Carry On 등 다른 모드의 JAR는 포함하지 않습니다.
